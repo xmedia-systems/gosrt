@@ -13,7 +13,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/openfresh/gosrt/srtapi"
+	"github.com/xmedia-systems/gosrt/srtapi"
 )
 
 func TestConf(t *testing.T) {

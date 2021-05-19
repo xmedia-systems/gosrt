@@ -16,7 +16,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/openfresh/gosrt/srtapi"
+	"github.com/xmedia-systems/gosrt/srtapi"
 )
 
 // Conf represents a system's network configuration.

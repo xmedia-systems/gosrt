@@ -15,7 +15,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/openfresh/gosrt/srtapi"
+	"github.com/xmedia-systems/gosrt/srtapi"
 )
 
 // Issue 16523

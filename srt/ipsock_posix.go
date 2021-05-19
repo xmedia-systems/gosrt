@@ -15,8 +15,8 @@ import (
 	"net"
 	"syscall"
 
-	"github.com/openfresh/gosrt/internal/poll"
-	"github.com/openfresh/gosrt/srtapi"
+	"github.com/xmedia-systems/gosrt/internal/poll"
+	"github.com/xmedia-systems/gosrt/srtapi"
 )
 
 // Probe probes IPv4, IPv6 and IPv4-mapped IPv6 communication

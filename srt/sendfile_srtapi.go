@@ -10,7 +10,7 @@ package srt
 import (
 	"io"
 
-	"github.com/openfresh/gosrt/internal/poll"
+	"github.com/xmedia-systems/gosrt/internal/poll"
 )
 
 // sendFile copies the contents of r to c using the sendfile

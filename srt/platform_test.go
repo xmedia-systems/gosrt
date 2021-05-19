@@ -11,7 +11,7 @@ import (
 	"net"
 	"strings"
 
-	"github.com/openfresh/gosrt/internal/testenv"
+	"github.com/xmedia-systems/gosrt/internal/testenv"
 )
 
 // testableNetwork reports whether network is testable on the current

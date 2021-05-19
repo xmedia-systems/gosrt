@@ -16,8 +16,8 @@ import (
 	"os"
 	"syscall"
 
-	"github.com/openfresh/gosrt/internal/poll"
-	"github.com/openfresh/gosrt/srtapi"
+	"github.com/xmedia-systems/gosrt/internal/poll"
+	"github.com/xmedia-systems/gosrt/srtapi"
 )
 
 // A sockaddr represents a SRT network endpoint

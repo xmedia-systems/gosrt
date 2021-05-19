@@ -6,7 +6,7 @@ package srt
 import (
 	"context"
 
-	"github.com/openfresh/gosrt/srtapi"
+	"github.com/xmedia-systems/gosrt/srtapi"
 )
 
 // listenCallbackContextKey is the type of contextKeys used for listenCallback.

@@ -12,7 +12,7 @@ import (
 	"io"
 	"syscall"
 
-	"github.com/openfresh/gosrt/srtapi"
+	"github.com/xmedia-systems/gosrt/srtapi"
 )
 
 // FD is a file descriptor. The net and os packages use this type as a

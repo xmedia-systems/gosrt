@@ -9,7 +9,7 @@
 package srt
 
 import (
-	"github.com/openfresh/gosrt/srtapi"
+	"github.com/xmedia-systems/gosrt/srtapi"
 )
 
 var (

@@ -14,7 +14,7 @@ package poll
 import (
 	"syscall"
 
-	"github.com/openfresh/gosrt/srtapi"
+	"github.com/xmedia-systems/gosrt/srtapi"
 )
 
 // Wrapper around the accept system call that marks the returned file

@@ -16,8 +16,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/openfresh/gosrt/internal/poll"
-	"github.com/openfresh/gosrt/internal/testenv"
+	"github.com/xmedia-systems/gosrt/internal/poll"
+	"github.com/xmedia-systems/gosrt/internal/testenv"
 )
 
 var prohibitionaryDialArgTests = []struct {

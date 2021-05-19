@@ -8,7 +8,7 @@
 
 package socktest_test
 
-import "github.com/openfresh/gosrt/srtapi"
+import "github.com/xmedia-systems/gosrt/srtapi"
 
 var (
 	socketFunc func(int, int, int) (int, error)

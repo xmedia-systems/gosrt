@@ -13,7 +13,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/openfresh/gosrt/internal/poll/runtime"
+	"github.com/xmedia-systems/gosrt/internal/poll/runtime"
 )
 
 type pollDesc struct {

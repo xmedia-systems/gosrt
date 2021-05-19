@@ -10,7 +10,7 @@ package poll
 import (
 	"io"
 
-	"github.com/openfresh/gosrt/srtapi"
+	"github.com/xmedia-systems/gosrt/srtapi"
 )
 
 // maxSendfileSize is the largest chunk size we ask the kernel to copy

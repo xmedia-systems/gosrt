@@ -12,8 +12,8 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/openfresh/gosrt/logging"
-	"github.com/openfresh/gosrt/srtapi"
+	"github.com/xmedia-systems/gosrt/logging"
+	"github.com/xmedia-systems/gosrt/srtapi"
 )
 
 var (

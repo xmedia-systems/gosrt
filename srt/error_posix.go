@@ -12,7 +12,7 @@ package srt
 import (
 	"os"
 
-	"github.com/openfresh/gosrt/srtapi"
+	"github.com/xmedia-systems/gosrt/srtapi"
 )
 
 // wrapSyscallError takes an error and a srtapi name. If the error is

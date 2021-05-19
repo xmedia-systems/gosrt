@@ -17,7 +17,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/openfresh/gosrt/internal/testenv"
+	"github.com/xmedia-systems/gosrt/internal/testenv"
 )
 
 func (ln *SRTListener) port() string {

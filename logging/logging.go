@@ -15,8 +15,8 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/openfresh/gosrt/conf"
-	"github.com/openfresh/gosrt/srtapi"
+	"github.com/xmedia-systems/gosrt/conf"
+	"github.com/xmedia-systems/gosrt/srtapi"
 )
 
 // HandlerFunc logging handler function type

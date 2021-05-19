@@ -12,7 +12,7 @@ import (
 	"log"
 	"net"
 
-	"github.com/openfresh/gosrt/srt"
+	"github.com/xmedia-systems/gosrt/srt"
 )
 
 //lint:ignore U1000 Dummy interface ffor Testable Example

@@ -25,11 +25,11 @@ import (
 	"os"
 	"time"
 
-	"github.com/openfresh/gosrt/conf"
-	"github.com/openfresh/gosrt/internal/poll"
-	"github.com/openfresh/gosrt/internal/poll/runtime"
-	"github.com/openfresh/gosrt/logging"
-	"github.com/openfresh/gosrt/srtapi"
+	"github.com/xmedia-systems/gosrt/conf"
+	"github.com/xmedia-systems/gosrt/internal/poll"
+	"github.com/xmedia-systems/gosrt/internal/poll/runtime"
+	"github.com/xmedia-systems/gosrt/logging"
+	"github.com/xmedia-systems/gosrt/srtapi"
 )
 
 type LoggingHandlerFunc logging.HandlerFunc

@@ -11,7 +11,7 @@ package socktest
 import (
 	"syscall"
 
-	"github.com/openfresh/gosrt/srtapi"
+	"github.com/xmedia-systems/gosrt/srtapi"
 )
 
 // Socket wraps srtapi.Socket.

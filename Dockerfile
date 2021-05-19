@@ -25,9 +25,9 @@ RUN wget -O srt.tar.gz "https://github.com/Haivision/srt/archive/${SRT_VERSION}.
     && make \
     && make install
 
-WORKDIR /go/src/github.com/openfresh/gosrt
-COPY ./ /go/src/github.com/openfresh/gosrt
-RUN CGO_ENABLED=1 GOOS=`go env GOHOSTOS` GOARCH=`go env GOHOSTARCH` go build -o bin/livetransmit github.com/openfresh/gosrt/examples/livetransmit \
+WORKDIR /go/src/github.com/xmedia-systems/gosrt
+COPY ./ /go/src/github.com/xmedia-systems/gosrt
+RUN CGO_ENABLED=1 GOOS=`go env GOHOSTOS` GOARCH=`go env GOHOSTARCH` go build -o bin/livetransmit github.com/xmedia-systems/gosrt/examples/livetransmit \
     && go test -short -v $(go list ./... | grep -v /vendor/)
 
 #production stage
@@ -41,5 +41,5 @@ WORKDIR /livetransmit
 
 RUN apk add --no-cache libstdc++ openssl
 
-COPY --from=build-stage /go/src/github.com/openfresh/gosrt/bin/livetransmit /livetransmit/bin/
+COPY --from=build-stage /go/src/github.com/xmedia-systems/gosrt/bin/livetransmit /livetransmit/bin/
 COPY --from=build-stage /usr/local/lib64/libsrt* /usr/local/lib64/

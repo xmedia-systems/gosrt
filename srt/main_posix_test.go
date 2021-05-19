@@ -9,7 +9,7 @@
 package srt
 
 import (
-	"github.com/openfresh/gosrt/internal/poll"
+	"github.com/xmedia-systems/gosrt/internal/poll"
 )
 
 var (

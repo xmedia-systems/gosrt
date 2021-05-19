@@ -14,7 +14,7 @@ import (
 	"syscall"
 	"testing"
 
-	socktest "github.com/openfresh/gosrt/internal/socktest"
+	socktest "github.com/xmedia-systems/gosrt/internal/socktest"
 )
 
 var sw socktest.Switch

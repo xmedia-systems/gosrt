@@ -11,7 +11,7 @@ package poll
 import (
 	"io"
 
-	"github.com/openfresh/gosrt/srtapi"
+	"github.com/xmedia-systems/gosrt/srtapi"
 )
 
 func (fd *FD) eofError(n int, err error) error {

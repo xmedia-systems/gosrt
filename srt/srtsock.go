@@ -14,7 +14,7 @@ import (
 	"net"
 	"time"
 
-	"github.com/openfresh/gosrt/srtapi"
+	"github.com/xmedia-systems/gosrt/srtapi"
 )
 
 // SRTAddr represents the address of a SRT end point.

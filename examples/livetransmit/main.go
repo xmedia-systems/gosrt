@@ -15,8 +15,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/openfresh/gosrt/srt"
-	"github.com/openfresh/gosrt/srtapi"
+	"github.com/xmedia-systems/gosrt/srt"
+	"github.com/xmedia-systems/gosrt/srtapi"
 )
 
 func main() {

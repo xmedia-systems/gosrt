@@ -14,8 +14,8 @@ package srt
 import (
 	"os"
 
-	"github.com/openfresh/gosrt/internal/poll"
-	"github.com/openfresh/gosrt/srtapi"
+	"github.com/xmedia-systems/gosrt/internal/poll"
+	"github.com/xmedia-systems/gosrt/srtapi"
 )
 
 // Wrapper around the socket system call that marks the returned file

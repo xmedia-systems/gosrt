@@ -7,7 +7,7 @@ import (
 	"context"
 	"strconv"
 
-	"github.com/openfresh/gosrt/srtapi"
+	"github.com/xmedia-systems/gosrt/srtapi"
 )
 
 const (

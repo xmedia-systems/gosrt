@@ -17,7 +17,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/openfresh/gosrt/internal/testenv"
+	"github.com/xmedia-systems/gosrt/internal/testenv"
 )
 
 func BenchmarkSRT4OneShot(b *testing.B) {

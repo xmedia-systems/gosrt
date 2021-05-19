@@ -13,8 +13,8 @@ import (
 	"net"
 	"time"
 
-	"github.com/openfresh/gosrt/internal/nettrace"
-	"github.com/openfresh/gosrt/internal/poll"
+	"github.com/xmedia-systems/gosrt/internal/nettrace"
+	"github.com/xmedia-systems/gosrt/internal/poll"
 )
 
 // A Dialer contains options for connecting to an address.

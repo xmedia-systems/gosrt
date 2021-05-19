@@ -9,7 +9,7 @@
 package poll
 
 import (
-	"github.com/openfresh/gosrt/srtapi"
+	"github.com/xmedia-systems/gosrt/srtapi"
 )
 
 // CloseFunc is used to hook the close call.

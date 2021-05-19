@@ -19,8 +19,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/openfresh/gosrt/internal/poll"
-	"github.com/openfresh/gosrt/internal/socktest"
+	"github.com/xmedia-systems/gosrt/internal/poll"
+	"github.com/xmedia-systems/gosrt/internal/socktest"
 )
 
 func (e *OpError) isValid() error {
