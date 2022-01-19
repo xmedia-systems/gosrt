@@ -1,8 +1,8 @@
 #build stage
-ARG GO_VERSION=1.14
-FROM golang:${GO_VERSION}-alpine AS build-stage
+ARG GO_VERSION=1.17
+FROM golang:${GO_VERSION}-alpine3.13 AS build-stage
 
-ENV SRT_VERSION v1.4.1
+ENV SRT_VERSION v1.4.4
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib64
 
 RUN wget -O srt.tar.gz "https://github.com/Haivision/srt/archive/${SRT_VERSION}.tar.gz" \

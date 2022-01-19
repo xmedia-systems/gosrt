@@ -11,7 +11,6 @@ package socktest_test
 import (
 	"os"
 	"sync"
-	"syscall"
 	"testing"
 
 	socktest "github.com/xmedia-systems/gosrt/internal/socktest"
@@ -38,9 +37,7 @@ func TestSwitch(t *testing.T) {
 	for i := 0; i < N; i++ {
 		go func() {
 			defer wg.Done()
-			for _, family := range []int{syscall.AF_INET, syscall.AF_INET6} {
-				socketFunc(family, syscall.SOCK_DGRAM, 0)
-			}
+			socketFunc()
 		}()
 	}
 	wg.Wait()
@@ -52,8 +49,7 @@ func TestSocket(t *testing.T) {
 		nil,
 	} {
 		sw.Set(socktest.FilterSocket, f)
-		for _, family := range []int{syscall.AF_INET, syscall.AF_INET6} {
-			socketFunc(family, syscall.SOCK_DGRAM, 0)
-		}
+		socketFunc()
+
 	}
 }

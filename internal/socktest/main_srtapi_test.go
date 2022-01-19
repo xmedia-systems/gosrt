@@ -11,7 +11,7 @@ package socktest_test
 import "github.com/xmedia-systems/gosrt/srtapi"
 
 var (
-	socketFunc func(int, int, int) (int, error)
+	socketFunc func() (int, error)
 	closeFunc  func(int) error
 )
 

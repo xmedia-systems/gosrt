@@ -15,10 +15,10 @@ import (
 )
 
 // Socket wraps srtapi.Socket.
-func (sw *Switch) Socket(family, sotype, proto int) (s int, err error) {
+func (sw *Switch) Socket() (s int, err error) {
 	sw.once.Do(sw.init)
 
-	so := &Status{Cookie: cookie(family, sotype, proto)}
+	so := &Status{}
 	sw.fmu.RLock()
 	f := sw.fltab[FilterSocket]
 	sw.fmu.RUnlock()
@@ -27,7 +27,7 @@ func (sw *Switch) Socket(family, sotype, proto int) (s int, err error) {
 	if err != nil {
 		return -1, err
 	}
-	s, so.Err = srtapi.Socket(family, sotype, proto)
+	s, so.Err = srtapi.Socket()
 	if err = af.apply(so); err != nil {
 		if so.Err == nil {
 			srtapi.Close(s)
@@ -41,7 +41,7 @@ func (sw *Switch) Socket(family, sotype, proto int) (s int, err error) {
 		sw.stats.getLocked(so.Cookie).OpenFailed++
 		return -1, so.Err
 	}
-	nso := sw.addLocked(s, family, sotype, proto)
+	nso := sw.addLocked(s, 0, 0, 0)
 	sw.stats.getLocked(nso.Cookie).Opened++
 	return s, nil
 }
