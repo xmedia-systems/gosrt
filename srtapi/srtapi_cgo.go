@@ -272,7 +272,7 @@ func Listen(s int, n int) (err error) {
 
 //export srtListenCallback
 func srtListenCallback(opaq unsafe.Pointer, ns C.SRTSOCKET, hsversion int, peeraddr *C.struct_sockaddr, streamid *C.char) int {
-	key := C.GoString((*C.char)(*(*unsafe.Pointer)(opaq)))
+	key := strconv.Itoa(int(uintptr(opaq)))
 	callback, ok := listenCallbackMap[key]
 	if !ok {
 		println("srtListenCallback: not found callback with key ", key)
@@ -292,8 +292,7 @@ func ListenCallback(s int, callback SrtListenCallbackFunc) (err error) {
 	defer runtime.UnlockOSThread()
 	key := strconv.Itoa(s)
 	listenCallbackMap[key] = callback
-	cKey := C.CString(key)
-	stat := C.srt_listen_callback(C.SRTSOCKET(s), (*C.srt_listen_callback_fn)(C.SrtListenCallback_cgo), unsafe.Pointer(&cKey))
+	stat := C.srt_listen_callback(C.SRTSOCKET(s), (*C.srt_listen_callback_fn)(C.SrtListenCallback_cgo), unsafe.Pointer(uintptr(s)))
 	if stat == APIError {
 		err = getLastError()
 	}
