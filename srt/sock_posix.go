@@ -6,6 +6,7 @@
 // license that can be found in the LICENSE file.
 // https://github.com/golang/go
 
+//go:build darwin || dragonfly || freebsd || linux || nacl || netbsd || openbsd || solaris || windows
 // +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris windows
 
 package srt
@@ -60,15 +61,18 @@ func socket(ctx context.Context, net string, family, sotype, proto int, ipv6only
 	}
 
 	if laddr != nil && raddr == nil {
-		if err := fd.listen(laddr, listenerBacklog); err != nil {
-			fd.Close()
-			return nil, err
-		}
 		if callback := listenCallbackValue(ctx); callback != nil {
+			if err := fd.init(); err != nil {
+				return nil, err
+			}
 			if err := fd.listenCallback(callback); err != nil {
 				fd.Close()
 				return nil, err
 			}
+		}
+		if err := fd.listen(laddr, listenerBacklog); err != nil {
+			fd.Close()
+			return nil, err
 		}
 		return fd, nil
 	}
