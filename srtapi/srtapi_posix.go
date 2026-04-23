@@ -282,3 +282,14 @@ func anyToSockaddr(rsa *syscall.RawSockaddrAny) (syscall.Sockaddr, error) {
 func getLastError() error {
 	return Errno(getlasterror())
 }
+
+// GetRejectReason returns the rejection reason code for a socket after a failed
+// connection. The returned value is one of the srtapi.Rej* constants.
+func GetRejectReason(fd int) int {
+	return getrejectreason(fd)
+}
+
+// RejectReasonStr returns a human-readable description of a rejection reason code.
+func RejectReasonStr(reason int) string {
+	return rejectreasonstrtring(reason)
+}

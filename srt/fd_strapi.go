@@ -10,7 +10,6 @@ package srt
 
 import (
 	"context"
-	"fmt"
 	"net"
 	"os"
 	"runtime"
@@ -68,7 +67,7 @@ func (fd *netFD) connect(ctx context.Context, la, ra syscall.Sockaddr) (rsa sysc
 	case srtapi.StatusConnected:
 		return nil, nil
 	default:
-		return nil, fmt.Errorf("unexpected socket state %d", state)
+		return nil, rejectionError(fd.pfd.Sysfd)
 	}
 	if err := fd.pfd.Init(fd.net, true); err != nil {
 		return nil, err
@@ -135,7 +134,7 @@ func (fd *netFD) connect(ctx context.Context, la, ra syscall.Sockaddr) (rsa sysc
 		case srtapi.StatusConnected:
 			return nil, nil
 		default:
-			return nil, fmt.Errorf("unexpected socket state %d", state)
+			return nil, rejectionError(fd.pfd.Sysfd)
 		}
 	}
 }

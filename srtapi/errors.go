@@ -7,6 +7,28 @@ package srtapi
 // #include <srt/srt.h>
 import "C"
 
+// Reject reason codes returned by GetRejectReason.
+// These correspond to libsrt's SRT_REJECT_REASON enum.
+const (
+	RejUnknown    = int(C.SRT_REJ_UNKNOWN)
+	RejSystem     = int(C.SRT_REJ_SYSTEM)
+	RejPeer       = int(C.SRT_REJ_PEER)
+	RejResource   = int(C.SRT_REJ_RESOURCE)
+	RejRogue      = int(C.SRT_REJ_ROGUE)
+	RejBacklog    = int(C.SRT_REJ_BACKLOG)
+	RejIPE        = int(C.SRT_REJ_IPE)
+	RejClose      = int(C.SRT_REJ_CLOSE)
+	RejVersion    = int(C.SRT_REJ_VERSION)
+	RejRdvCookie  = int(C.SRT_REJ_RDVCOOKIE)
+	RejBadSecret  = int(C.SRT_REJ_BADSECRET)
+	RejUnsecure   = int(C.SRT_REJ_UNSECURE)
+	RejMessageAPI = int(C.SRT_REJ_MESSAGEAPI)
+	RejCongestion = int(C.SRT_REJ_CONGESTION)
+	RejFilter     = int(C.SRT_REJ_FILTER)
+	RejGroup   = int(C.SRT_REJ_GROUP)
+	RejTimeout = int(C.SRT_REJ_TIMEOUT)
+)
+
 // Errors
 const (
 	EUNKNOWN        = Errno(C.SRT_EUNKNOWN)

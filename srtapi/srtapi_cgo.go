@@ -10,6 +10,9 @@ package srtapi
 
 int SrtListenCallback_cgo(void* opaq, SRTSOCKET ns, int hsversion,
     const struct sockaddr* peeraddr, const char* streamid);
+
+void SrtConnectCallback_cgo(void* opaq, SRTSOCKET ns, int errorcode,
+    const struct sockaddr* peeraddr, int token);
 */
 import "C"
 import (
@@ -26,6 +29,14 @@ type SrtListenCallbackFunc func(ns int, hsversion int, peeraddr syscall.Sockaddr
 
 var listenCallbackMap map[string]SrtListenCallbackFunc
 
+// SrtConnectCallbackFunc is called on a listener socket for every connection
+// attempt that completes (success or failure). errorcode is 0 on success and a
+// SRT errno on failure; ns is the new socket and is valid only for the duration
+// of the call.
+type SrtConnectCallbackFunc func(ns int, errorcode int, peeraddr syscall.Sockaddr, token int)
+
+var connectCallbackMap map[string]SrtConnectCallbackFunc
+
 // Startup call srt_startup
 func Startup() (err error) {
 	runtime.LockOSThread()
@@ -35,6 +46,7 @@ func Startup() (err error) {
 		err = getLastError()
 	}
 	listenCallbackMap = map[string]SrtListenCallbackFunc{}
+	connectCallbackMap = map[string]SrtConnectCallbackFunc{}
 	return
 }
 
@@ -47,6 +59,7 @@ func Cleanup() (err error) {
 		err = getLastError()
 	}
 	listenCallbackMap = nil
+	connectCallbackMap = nil
 	return
 }
 
@@ -299,12 +312,43 @@ func ListenCallback(s int, callback SrtListenCallbackFunc) (err error) {
 	return
 }
 
+//export srtConnectCallback
+func srtConnectCallback(opaq unsafe.Pointer, ns C.SRTSOCKET, errorcode C.int, peeraddr *C.struct_sockaddr, token C.int) {
+	key := strconv.Itoa(int(uintptr(opaq)))
+	callback, ok := connectCallbackMap[key]
+	if !ok {
+		return
+	}
+	sa, err := anyToSockaddr((*syscall.RawSockaddrAny)(unsafe.Pointer(peeraddr)))
+	if err != nil {
+		return
+	}
+	callback(int(ns), int(errorcode), sa, int(token))
+}
+
+// ConnectCallback registers a callback on a listener socket that is invoked for
+// every connection attempt resolution (both accepted and rejected). Call
+// GetRejectReason(ns) inside the callback when errorcode != 0 to obtain the
+// structured rejection reason.
+func ConnectCallback(s int, callback SrtConnectCallbackFunc) (err error) {
+	runtime.LockOSThread()
+	defer runtime.UnlockOSThread()
+	key := strconv.Itoa(s)
+	connectCallbackMap[key] = callback
+	stat := C.srt_connect_callback(C.SRTSOCKET(s), (*C.srt_connect_callback_fn)(C.SrtConnectCallback_cgo), unsafe.Pointer(uintptr(s)))
+	if stat == APIError {
+		err = getLastError()
+	}
+	return
+}
+
 // Close call srt_close
 func Close(fd int) (err error) {
 	runtime.LockOSThread()
 	defer runtime.UnlockOSThread()
 	key := strconv.Itoa(fd)
 	delete(listenCallbackMap, key)
+	delete(connectCallbackMap, key)
 	stat := C.srt_close(C.SRTSOCKET(fd))
 	if stat == APIError {
 		err = getLastError()
@@ -369,6 +413,14 @@ func getlasterror() int {
 
 func strerror(code int, errnoval int) string {
 	return C.GoString(C.srt_strerror(C.int(code), C.int(errnoval)))
+}
+
+func getrejectreason(fd int) int {
+	return int(C.srt_getrejectreason(C.SRTSOCKET(fd)))
+}
+
+func rejectreasonstrtring(id int) string {
+	return C.GoString(C.srt_rejectreason_str(C.int(id)))
 }
 
 // ClearLastError call srt_clearlasterror
