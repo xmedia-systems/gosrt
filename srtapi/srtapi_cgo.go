@@ -17,6 +17,7 @@ import (
 	"os"
 	"runtime"
 	"strconv"
+	"sync"
 	"syscall"
 	"unsafe"
 )
@@ -24,7 +25,13 @@ import (
 // SrtListenCallbackFunc listen callback function type
 type SrtListenCallbackFunc func(ns int, hsversion int, peeraddr syscall.Sockaddr, streamid string) int
 
-var listenCallbackMap map[string]SrtListenCallbackFunc
+// listenCallbackMap is read by srtListenCallback on a native libsrt thread and
+// modified by Startup, Cleanup, ListenCallback and Close on Go goroutines.
+// listenCallbackMu guards it.
+var (
+	listenCallbackMu  sync.RWMutex
+	listenCallbackMap map[string]SrtListenCallbackFunc
+)
 
 // Startup call srt_startup
 func Startup() (err error) {
@@ -34,7 +41,9 @@ func Startup() (err error) {
 	if stat == APIError {
 		err = getLastError()
 	}
+	listenCallbackMu.Lock()
 	listenCallbackMap = map[string]SrtListenCallbackFunc{}
+	listenCallbackMu.Unlock()
 	return
 }
 
@@ -46,7 +55,9 @@ func Cleanup() (err error) {
 	if stat == APIError {
 		err = getLastError()
 	}
+	listenCallbackMu.Lock()
 	listenCallbackMap = nil
+	listenCallbackMu.Unlock()
 	return
 }
 
@@ -273,7 +284,9 @@ func Listen(s int, n int) (err error) {
 //export srtListenCallback
 func srtListenCallback(opaq unsafe.Pointer, ns C.SRTSOCKET, hsversion int, peeraddr *C.struct_sockaddr, streamid *C.char) int {
 	key := strconv.Itoa(int(uintptr(opaq)))
+	listenCallbackMu.RLock()
 	callback, ok := listenCallbackMap[key]
+	listenCallbackMu.RUnlock()
 	if !ok {
 		println("srtListenCallback: not found callback with key ", key)
 		return -1
@@ -291,7 +304,9 @@ func ListenCallback(s int, callback SrtListenCallbackFunc) (err error) {
 	runtime.LockOSThread()
 	defer runtime.UnlockOSThread()
 	key := strconv.Itoa(s)
+	listenCallbackMu.Lock()
 	listenCallbackMap[key] = callback
+	listenCallbackMu.Unlock()
 	stat := C.srt_listen_callback(C.SRTSOCKET(s), (*C.srt_listen_callback_fn)(C.SrtListenCallback_cgo), unsafe.Pointer(uintptr(s)))
 	if stat == APIError {
 		err = getLastError()
@@ -304,7 +319,9 @@ func Close(fd int) (err error) {
 	runtime.LockOSThread()
 	defer runtime.UnlockOSThread()
 	key := strconv.Itoa(fd)
+	listenCallbackMu.Lock()
 	delete(listenCallbackMap, key)
+	listenCallbackMu.Unlock()
 	stat := C.srt_close(C.SRTSOCKET(fd))
 	if stat == APIError {
 		err = getLastError()
